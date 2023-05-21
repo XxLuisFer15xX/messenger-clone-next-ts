@@ -1,0 +1,8 @@
+dist
+public
+build
+.next
+
+package-lock.json
+package.json
+README.md
