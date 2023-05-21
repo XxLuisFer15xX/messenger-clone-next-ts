@@ -30,7 +30,7 @@ export const TextInput = ({
       </label>
       <div className="mt-2">
         <input
-          type="text"
+          type={type}
           id={id}
           autoComplete={id}
           disabled={disabled}

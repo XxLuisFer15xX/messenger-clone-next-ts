@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react'
+import axios from 'axios'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import { AuthSocialButton, Button, TextInput } from '@components/atoms'
 import { BsGithub, BsGoogle } from 'react-icons/bs'
@@ -17,9 +18,11 @@ export const AuthForm = () => {
     }
   }, [variant])
 
-  const onSubmit: SubmitHandler<FieldValues> = data => {
+  const onSubmit: SubmitHandler<FieldValues> = async data => {
     setIsLoading(true)
     if (variant === 'REGISTER') {
+      const response = await axios.post('api/auth/register', data)
+      console.log(response)
     }
     if (variant === 'LOGIN') {
     }
@@ -78,7 +81,7 @@ export const AuthForm = () => {
             <TextInput
               id="confirmPassword"
               label="Confirm Password"
-              type="confirmPassword"
+              type="password"
               register={register}
               errors={errors}
               disabled={isLoading}
