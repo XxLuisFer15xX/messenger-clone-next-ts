@@ -1,8 +1,10 @@
 import { useCallback, useState } from 'react'
-import axios from 'axios'
+import { signIn } from 'next-auth/react'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
-import { AuthSocialButton, Button, TextInput } from '@components/atoms'
 import { BsGithub, BsGoogle } from 'react-icons/bs'
+import { toast } from 'react-hot-toast'
+import axios from 'axios'
+import { AuthSocialButton, Button, TextInput } from '@components/atoms'
 
 type Variant = 'LOGIN' | 'REGISTER'
 
@@ -21,10 +23,22 @@ export const AuthForm = () => {
   const onSubmit: SubmitHandler<FieldValues> = async data => {
     setIsLoading(true)
     if (variant === 'REGISTER') {
-      const response = await axios.post('api/auth/register', data)
-      console.log(response)
+      await axios
+        .post('api/auth/register', data)
+        .catch(() => toast.error('Something went wrong'))
     }
     if (variant === 'LOGIN') {
+      signIn('credentials', {
+        ...data,
+        redirect: false,
+      }).then(callback => {
+        if (callback?.error) {
+          toast.error('Invalid credentials')
+        }
+        if (callback?.ok) {
+          toast.success('Logged in!')
+        }
+      })
     }
     setIsLoading(false)
   }

@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt'
-import NextAuth, { AuthOptions } from 'next-auth'
+import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import GithubProvider from 'next-auth/providers/github'
 import GoogleProvider from 'next-auth/providers/google'
@@ -13,7 +13,7 @@ declare module 'next-auth' {
   }
 }
 
-export const auhtOptions: AuthOptions = {
+export default NextAuth({
   adapter: PrismaAdapter(prisma),
   providers: [
     GithubProvider({
@@ -62,44 +62,10 @@ export const auhtOptions: AuthOptions = {
     }),
   ],
   debug: process.env.NODE_ENV === 'development',
-  /* pages: {
-    signIn: '/auth/login',
-    newUser: '/auth/register',
-  }, */
   session: {
     maxAge: 604800, // 7d
     strategy: 'jwt',
     updateAge: 86400, // cada día
   },
   secret: process.env.NEXTAUTH_SECRET,
-  /* callbacks: {
-    async jwt({ token, account, user }) {
-      if (account) {
-        token.accessToken = account.access_token
-        switch (account.type) {
-          case 'oauth':
-            // Crear usuario o verificar si existe y devolver la información del usuario en base al correo
-            // token.user = await dbUsers.oAUthToDbUser( user?.email || '', user?.name || '' );
-            token.user = user
-            break
-          case 'credentials':
-            token.user = user
-            break
-          default:
-            token.user = null
-            break
-        }
-      }
-      return token
-    },
-    async session({ session, token, user }) {
-      session.accessToken = token.accessToken as any
-      session.user = token.user as any
-      return session
-    },
-  }, */
-}
-
-const handler = NextAuth(auhtOptions)
-
-export { handler as GET, handler as POST }
+})
