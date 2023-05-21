@@ -17,7 +17,7 @@ export const MainLayout = ({
   imageFullUrl?: string
 }) => {
   return (
-    <div>
+    <>
       <Head>
         <title>{title}</title>
         <meta name="description" content={description} />
@@ -27,9 +27,9 @@ export const MainLayout = ({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {imageFullUrl && <meta name="og:image" content={imageFullUrl} />}
       </Head>
-      <main className={`flex flex-col ${styles['container-main']}`}>
+      <main className={`flex flex-col h-full ${styles['container-main']}`}>
         {children}
       </main>
-    </div>
+    </>
   )
 }
