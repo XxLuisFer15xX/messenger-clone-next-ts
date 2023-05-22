@@ -6,6 +6,7 @@ import GoogleProvider from 'next-auth/providers/google'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 
 import prisma from '@/libs/prismadb'
+import { dbUsers } from '@/database'
 
 declare module 'next-auth' {
   interface Session {
@@ -66,6 +67,35 @@ export default NextAuth({
     maxAge: 604800, // 7d
     strategy: 'jwt',
     updateAge: 86400, // cada día
+  },
+  callbacks: {
+    async jwt({ token, account, user }) {
+      if (account) {
+        token.accessToken = account.access_token
+        switch (account.type) {
+          case 'oauth':
+            // Crear usuario o verificar si existe y devolver la información del usuario en base al correo
+            token.user = await dbUsers.oAUthToDbUser(
+              user?.email || '',
+              user?.name || '',
+            )
+            token.user = user
+            break
+          case 'credentials':
+            token.user = user
+            break
+          default:
+            token.user = null
+            break
+        }
+      }
+      return token
+    },
+    async session({ session, token, user }) {
+      session.accessToken = token.accessToken as any
+      session.user = token.user as any
+      return session
+    },
   },
   secret: process.env.NEXTAUTH_SECRET,
 })

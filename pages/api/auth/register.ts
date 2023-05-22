@@ -27,12 +27,10 @@ export const register = async (
 ) => {
   try {
     const { email, name, password } = req.body
-    console.log({ email, name, password })
     if (!email || !name || !password) {
       return res.status(400).json({ message: 'Missing info' })
     }
     const hashedPassword = await bcrypt.hash(password, 12)
-    console.log({ hashedPassword })
     const user = await prisma.user.create({
       data: {
         email,

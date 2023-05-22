@@ -22,30 +22,37 @@ export const AuthForm = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = async data => {
     setIsLoading(true)
-    if (variant === 'REGISTER') {
-      await axios
-        .post('api/auth/register', data)
-        .catch(() => toast.error('Something went wrong'))
-    }
-    if (variant === 'LOGIN') {
-      signIn('credentials', {
-        ...data,
-        redirect: false,
-      }).then(callback => {
-        if (callback?.error) {
+    try {
+      if (variant === 'REGISTER') {
+        await axios.post('api/auth/register', data)
+      }
+      if (variant === 'LOGIN') {
+        const response = await signIn('credentials', {
+          ...data,
+          redirect: false,
+        })
+        if (response?.error) {
           toast.error('Invalid credentials')
         }
-        if (callback?.ok) {
+        if (response?.ok && !response?.error) {
           toast.success('Logged in!')
         }
-      })
+      }
+    } catch (error) {
+      toast.error('Something went wrong')
     }
     setIsLoading(false)
   }
 
-  const socialAction = (action: string) => {
+  const socialAction = async (action: string) => {
     setIsLoading(true)
-
+    const response = await signIn(action, { redirect: false })
+    if (response?.error) {
+      toast.error('Invalid credentials')
+    }
+    if (response?.ok && !response?.error) {
+      toast.success('Logged in!')
+    }
     setIsLoading(false)
   }
 
@@ -121,11 +128,11 @@ export const AuthForm = () => {
           <div className="mt-6 flex gap-2">
             <AuthSocialButton
               icon={BsGithub}
-              onClick={() => socialAction('Github')}
+              onClick={() => socialAction('github')}
             />
             <AuthSocialButton
               icon={BsGoogle}
-              onClick={() => socialAction('Google')}
+              onClick={() => socialAction('google')}
             />
           </div>
           <div className="flex gap-2 justify-center text-sm mt-6 px-2 text-gray-500">
