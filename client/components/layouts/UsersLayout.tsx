@@ -1,6 +1,6 @@
 import Head from 'next/head'
-import { ToasterContext } from '@/context/toast'
-import { Sidebar } from '@/components/organisms'
+import { ToasterContext } from '@context/toast'
+import { Sidebar } from '@components/organisms'
 
 export const UsersLayout = ({
   children,

@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt'
 
-import prisma from '@/libs/prismadb'
+import prisma from '@libs/prismadb'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 type Data =
@@ -41,7 +41,7 @@ export const register = async (
     return res.status(200).json({ user })
   } catch (error) {
     console.log(error, 'REGISTRATION_ERROR')
-    return res.status(400).json({ message: 'Internal Server Error' })
+    return res.status(500).json({ message: 'Internal Server Error' })
   }
 }
 

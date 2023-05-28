@@ -1,5 +1,5 @@
-import { DesktopItem } from '@/components/atoms'
-import { useRoutes } from '@/hooks/useRoutes'
+import { DesktopItem } from '@components/atoms'
+import { useRoutes } from '@hooks'
 import { useState } from 'react'
 
 export const DesktopSidebar = () => {

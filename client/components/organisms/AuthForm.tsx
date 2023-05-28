@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react'
+import { useRouter } from 'next/router'
 import { signIn } from 'next-auth/react'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import { BsGithub, BsGoogle } from 'react-icons/bs'
@@ -9,6 +10,7 @@ import { AuthSocialButton, Button, TextInput } from '@components/atoms'
 type Variant = 'LOGIN' | 'REGISTER'
 
 export const AuthForm = () => {
+  const router = useRouter()
   const [variant, setVariant] = useState<Variant>('LOGIN')
   const [isLoading, setIsLoading] = useState(false)
 
@@ -24,7 +26,9 @@ export const AuthForm = () => {
     setIsLoading(true)
     try {
       if (variant === 'REGISTER') {
-        await axios.post('api/auth/register', data)
+        await axios.post('/api/auth/register', data)
+        toast.success('Logged in!')
+        await signIn('credentials', { ...data })
       }
       if (variant === 'LOGIN') {
         const response = await signIn('credentials', {
@@ -36,10 +40,12 @@ export const AuthForm = () => {
         }
         if (response?.ok && !response?.error) {
           toast.success('Logged in!')
+          router.push('/users')
         }
       }
     } catch (error) {
       toast.error('Something went wrong')
+      console.log(error)
     }
     setIsLoading(false)
   }

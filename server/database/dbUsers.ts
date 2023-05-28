@@ -1,4 +1,4 @@
-import prisma from '@/libs/prismadb'
+import prisma from '@libs/prismadb'
 
 // Esta función crea o verifica el usuario de OAuth
 export const oAUthToDbUser = async (oAuthEmail: string, oAuthName: string) => {

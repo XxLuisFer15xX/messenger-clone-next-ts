@@ -5,8 +5,8 @@ import GithubProvider from 'next-auth/providers/github'
 import GoogleProvider from 'next-auth/providers/google'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 
-import prisma from '@/libs/prismadb'
-import { dbUsers } from '@/database'
+import prisma from '@libs/prismadb'
+import { dbUsers } from '@server/database'
 
 declare module 'next-auth' {
   interface Session {

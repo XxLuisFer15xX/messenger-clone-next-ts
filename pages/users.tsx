@@ -1,5 +1,5 @@
-import { UsersLayout } from '@/components/layouts'
-import { EmptyState } from '@/components/molecules'
+import { UsersLayout } from '@components/layouts'
+import { EmptyState } from '@components/molecules'
 import { GetServerSideProps } from 'next'
 import { getSession } from 'next-auth/react'
 

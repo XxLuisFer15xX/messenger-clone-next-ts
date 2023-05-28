@@ -1,6 +1,5 @@
 import Head from 'next/head'
-import styles from '@styles/MainLayout.module.css'
-import { ToasterContext } from '@/context/toast'
+import { ToasterContext } from '@context/toast'
 
 export const metada = {
   title: 'Messenger Clone',
@@ -28,7 +27,7 @@ export const MainLayout = ({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {imageFullUrl && <meta name="og:image" content={imageFullUrl} />}
       </Head>
-      <main className={`flex flex-col h-full ${styles['container-main']}`}>
+      <main className="flex flex-col h-full">
         <ToasterContext />
         {children}
       </main>

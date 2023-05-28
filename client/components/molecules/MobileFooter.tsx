@@ -1,6 +1,6 @@
-import { useConversation, useRoutes } from '@/hooks'
+import { useConversation, useRoutes } from '@hooks'
 import React from 'react'
-import { MobileItem } from '@/components/atoms'
+import { MobileItem } from '@components/atoms'
 
 export const MobileFooter = () => {
   const routes = useRoutes()

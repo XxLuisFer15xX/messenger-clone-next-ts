@@ -1,9 +1,9 @@
 import { GetServerSideProps } from 'next'
 import { getSession } from 'next-auth/react'
 import Image from 'next/image'
-import { MainLayout } from '@/components/layouts'
-import { AuthForm } from '@/components/organisms'
-import { serializeURL } from '@/utils'
+import { MainLayout } from '@components/layouts'
+import { AuthForm } from '@components/organisms'
+import { serializeURL } from '@utils'
 
 const Login = () => {
   return (

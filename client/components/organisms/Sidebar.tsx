@@ -1,4 +1,4 @@
-import { DesktopSidebar, MobileFooter } from '@/components/molecules'
+import { DesktopSidebar, MobileFooter } from '@components/molecules'
 
 export const Sidebar = ({ children }: { children: React.ReactNode }) => {
   return (

@@ -1,5 +1,5 @@
 import { createContext } from 'react'
-import { AuthActionType, AuthState } from './authReducer'
+import { AuthActionType, AuthState } from './'
 
 interface ContextProps {
   authState: AuthState
