@@ -1,12 +1,12 @@
-import { IUser } from '@types'
+import { User } from '@prisma/client'
 
 export interface AuthState {
   isLoggedIn: boolean
-  user?: IUser
+  user?: User
 }
 
 export type AuthActionType =
-  | { type: '[Auth] - Login'; payload: IUser }
+  | { type: '[Auth] - Login'; payload: User }
   | { type: '[Auth] - Logout' }
 
 export const AUTH_INITIAL_STATE: AuthState = {

@@ -1,10 +1,16 @@
-import { DesktopItem } from '@components/atoms'
+import { Avatar, DesktopItem } from '@components/atoms'
 import { useRoutes } from '@hooks'
 import { useState } from 'react'
+import { User } from '@prisma/client'
 
-export const DesktopSidebar = () => {
+interface DesktopSidebarProps {
+  currentUser?: User
+}
+
+export const DesktopSidebar = ({ currentUser }: DesktopSidebarProps) => {
   const routes = useRoutes()
   const [isOpen, setIsOpen] = useState(false)
+  console.log(currentUser)
   return (
     <>
       <div
@@ -38,6 +44,26 @@ export const DesktopSidebar = () => {
               />
             ))}
           </ul>
+        </nav>
+        <nav
+          className="
+          mt-4
+          flex
+          flex-col
+          justify-between
+          items-center
+        "
+        >
+          <div
+            onClick={() => setIsOpen(true)}
+            className="
+            cursor-pointer
+            hover:opacity-75
+            transition
+          "
+          >
+            <Avatar user={currentUser} />
+          </div>
         </nav>
       </div>
     </>
