@@ -68,6 +68,9 @@ export default NextAuth({
     strategy: 'jwt',
     updateAge: 86400, // cada día
   },
+  pages: {
+    signIn: '/auth/login',
+  },
   callbacks: {
     async jwt({ token, account, user }) {
       if (account) {
